@@ -1,8 +1,9 @@
 package com.elzo.elzo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class itemsBean {
+public class itemsBean implements Serializable {
 
     public itemsBean() {
     }

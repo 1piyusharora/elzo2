@@ -1,11 +1,14 @@
 package com.elzo.elzo;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +16,14 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     private List<wpFragment> fragments;
     private float baseElevation;
+    ArrayList<itemsBean> itemsBeanArrayList;
 
-    public CardFragmentPagerAdapter(FragmentManager fm, float baseElevation) {
+    public CardFragmentPagerAdapter(FragmentManager fm, float baseElevation,ArrayList<itemsBean> itemsBeanArrayList) {
         super(fm);
         fragments = new ArrayList<>();
         this.baseElevation = baseElevation;
-
-        for(int i = 0; i< 3; i++){
+        this.itemsBeanArrayList=itemsBeanArrayList;
+        for(int i = 0; i< itemsBeanArrayList.size(); i++){
             addCardFragment(new wpFragment());
         }
     }
@@ -41,7 +45,12 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
 
     @Override
     public Fragment getItem(int position) {
-        return wpFragment.getInstance(position);
+        Fragment fragment = new wpFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("itemsList",itemsBeanArrayList);
+        fragment.setArguments(args);
+        return fragment;
+        //return wpFragment.getInstance(position);
     }
 
     @Override
